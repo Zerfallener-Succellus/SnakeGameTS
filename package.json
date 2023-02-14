@@ -1,0 +1,12 @@
+{
+  "name": "snake-ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}
