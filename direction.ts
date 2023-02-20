@@ -1,0 +1,1 @@
+export let direction: 'up' | 'down' | 'left' | 'right' = 'right';

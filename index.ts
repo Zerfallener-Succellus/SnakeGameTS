@@ -1,12 +1,19 @@
-import { BOARD_COLUMNS, BOARD_ROWS, INITIAL_SNAKE_SIZE } from './consts.js';
+import { BOARD_COLUMNS, BOARD_ROWS, INITIAL_SNAKE_SIZE} from './consts.js';
 import { isCoordenateEqualToLinear, randomCoordinate } from './helpers.js';
 import { Coordinates } from "./types";
+
+let direction: 'up' | 'down' | 'left' | 'right' = 'right';
 
 const pixels : HTMLDivElement[] = [];
 let snakeCordinates : Coordinates[];
 let foodCoordinate : Coordinates;
+let SnakeX;
+let position;
 
 
+
+
+//teste
 
 
 
@@ -26,7 +33,8 @@ const setupBoard = (columns: number, rows: number) => {
 
 
 const initializeSnake = (columns: number, rows:number): Coordinates[] => {
-  const head : Coordinates = {x:Math.floor(columns/2) , y: Math.floor(rows/2)}
+  
+  const head : Coordinates = {x:(Math.floor(columns/2)) , y: Math.floor(rows/2)}
   
   const snake = [head];
   
@@ -35,8 +43,10 @@ const initializeSnake = (columns: number, rows:number): Coordinates[] => {
     snake.push(bodyCoordinate);
   }
 
+  SnakeX = head.x;
   return snake;
 };
+
 
 
 const generateFood = () => {
@@ -58,6 +68,7 @@ pixels.forEach((pixel, linear) => {
     if (isCoordenateEqualToLinear(snakeCordinates, linear, BOARD_COLUMNS)) {
       pixel.className = 'pixel snake';
     }
+    
   });
 
 
@@ -68,13 +79,78 @@ pixels.forEach((pixel, linear) => {
     }
   
 });
+
+
+//mover a cobra na nova direção
+
+
+
+};
+
+
+
+
+
+const moveSnake = () => {
+  // Meche a cabecinha uiui
+  const head = snakeCordinates[0];
+  if(direction === 'down'){
+    snakeCordinates[0] = { x: head.x, y: head.y + 1};
+  }else if (direction === 'up') {
+    snakeCordinates[0] = { x: head.x, y: head.y - 1 };
+  } else if (direction === 'left') {
+    snakeCordinates[0] = { x: head.x - 1, y: head.y };
+  } else if (direction === 'right') {
+    snakeCordinates[0] = { x: head.x + 1, y: head.y };
+  }
+    
+
+
+ // Meche o corpinho aiai
+ for (let i = snakeCordinates.length - 1; i > 0; i--) {
+  const current = snakeCordinates[i];
+  const prev = snakeCordinates[i - 1];
+  snakeCordinates[i] = { x: prev.x, y: prev.y };
 }
 
-setupBoard(BOARD_COLUMNS, BOARD_ROWS);
 
-snakeCordinates = initializeSnake(BOARD_COLUMNS, BOARD_COLUMNS);
+ // Atualiza a posição do segundo segmento (posição 1) para a nova posição da cabeça da cobra
+ snakeCordinates[1] = { x: head.x, y: head.y };
 
-generateFood();
-
+  // Desenha o quadro
 paint();
 
+  }
+
+
+const seeCord = () =>{
+
+  console.log(snakeCordinates);
+  console.log(direction);
+}
+
+//KB listener
+
+
+
+setupBoard(BOARD_COLUMNS, BOARD_ROWS);
+snakeCordinates = initializeSnake(BOARD_COLUMNS, BOARD_COLUMNS);
+generateFood();
+paint();
+
+setInterval(moveSnake, 200);
+
+window.addEventListener("keydown", function(event) {
+  if (event.defaultPrevented) {
+    return;
+  }
+  if (event.code === "ArrowDown") {
+    direction = 'down';
+  } else if (event.code === "ArrowUp") {
+    direction = 'up';
+  } else if (event.code === "ArrowLeft") {
+    direction = 'left';
+  } else if (event.code === "ArrowRight") {
+    direction = 'right';
+  }
+  });
