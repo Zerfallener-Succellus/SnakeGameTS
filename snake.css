@@ -5,7 +5,9 @@ body{
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #1d2647;
+  background-color: #38dbff;
+  z-index: -5;
+  font-family: 'Darker Grotesque', sans-serif;
 }
 
 #hud {
@@ -19,6 +21,10 @@ font-size: 32px;
 background: rgba(0, 60, 200, 0.5);
 border-top-right-radius: 20px;
 border-end-end-radius: 20px;
+font-family: 'Darker Grotesque';
+font-size: xx-large;
+font-weight: 400;
+
 }
 
 #board{
@@ -27,18 +33,20 @@ border-end-end-radius: 20px;
   height: 100%;
   display: grid;
   gap: 1px;
+  z-index: -3;
+  
 }
 
 #board .pixel {
-  background: #3e904f;
+  background: #00ff75;
 }
 
 #board .pixel.snake {
-  background: black;
+  background: #000000;
 }
 
 #board .pixel.food {
-  background: coral;
+  background: #ff5d5d;
 }
 
 .box {
@@ -48,12 +56,62 @@ border-end-end-radius: 20px;
     flex-direction: column;
     align-items: center;
     position: relative;
+    z-index: -4;
     
 }
 
 #board-container {
   display: flex;
   justify-content: center;
+  
+}
+
+#game-over{
+  position: absolute;
+  background-color: #ffb443;
+  width: 400px;
+  height: 300px;
+  border-radius: 30px;
+  display: grid;
+  align-content: space-around;
+  justify-content: center;
+  justify-items: center;
+  z-index: -2;
+  color: azure;
+  font-family: 'Darker Grotesque';
+font-size: x-large;
+font-weight: 400;
 }
 
 
+#restart{
+  background-color: #ffb443;
+  border: 2px solid #00ff75;
+  padding:20px 50px;
+  font-weight: bold;
+  font-size:30px;
+  position:relative;
+  color:#00ff75;
+}
+
+#restart:after{
+  content:'';
+  position:absolute;
+  background-color:#00ff75;
+  top:8px;
+  left:8px;
+  right:-8px;
+  bottom:-8px;
+  z-index:-1;
+}
+
+#restart:hover{
+  color:#ffb443;
+  background-color:#00ff75;
+  transition: all 0.3s ease;
+}
+#restart:hover:after{
+  background-color:#ffb443;
+  border:2px solid #00ff75;
+  transition: all 0.3s ease;
+}
